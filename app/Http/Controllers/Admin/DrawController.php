@@ -47,7 +47,8 @@ class DrawController extends Controller
         // Simpan ke database
         Draw::create($validated); // Simpan data undian ke database
 
-        return back()->with('success', 'Data berhasil disimpan');
+        return redirect()->route('admin.draws.index', $event)
+            ->with('success', 'Undian berhasil dibuat!');
     }
 
 
