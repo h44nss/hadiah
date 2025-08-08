@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
@@ -37,7 +38,12 @@ class EventController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('events', 'public');
+            $filename = time() . '_' . Str::slug(pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME));
+            $ext = $request->image->getClientOriginalExtension();
+            $fullName = $filename . '.' . $ext;
+
+            $request->file('image')->move(public_path('uploads/events'), $fullName);
+            $validated['image'] = 'events/' . $fullName; // Simpan relatif ke folder 'uploads'
         }
 
         Event::create($validated);

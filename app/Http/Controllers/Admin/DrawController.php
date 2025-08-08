@@ -32,24 +32,24 @@ class DrawController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'winner_count' => 'required|integer|min:1',
-            'image' => 'nullable|image|max:2048', // ✅ validasi gambar
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        // Tambahkan ID event
         $validated['event_id'] = $event->id;
 
-        // ✅ Cek dan simpan gambar jika ada
+        // Simpan gambar ke public/uploads/draws
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('draws', 'public');
-            $validated['image'] = $imagePath; // Simpan path ke DB (contoh: draws/nama.jpg)
+            $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('uploads/draws'), $filename);
+            $validated['image'] = 'draws/' . $filename; // Simpan relatif ke folder uploads
         }
 
-        // Simpan data draw
-        Draw::create($validated);
+        // Simpan ke database
+        Draw::create($validated); // Simpan data undian ke database
 
-        return redirect()->route('admin.draws.index', $event)
-            ->with('success', 'Undian berhasil dibuat!');
+        return back()->with('success', 'Data berhasil disimpan');
     }
+
 
     public function show(Event $event, Draw $draw)
     {

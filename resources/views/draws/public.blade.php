@@ -281,7 +281,7 @@
 </head>
 
 <body
-    style="background-image: url('{{ $event && $event->image ? asset('storage/' . $event->image) : asset('default.jpg') }}');">
+    style="background-image: url('{{ $event && $event->image ? asset('uploads/' . $event->image) : asset('default.jpg') }}');">
 
     {{-- Overlay --}}
     <div class="overlay"></div>
@@ -304,7 +304,7 @@
         {{-- Gambar hadiah --}}
         @if ($draw->image)
             <div class="mb-4">
-                <img src="{{ asset('storage/' . $draw->image) }}" alt="Gambar Hadiah" class="img-fluid rounded shadow"
+                <img src="{{ asset('uploads/' . $draw->image) }}" alt="Gambar Hadiah" class="img-fluid rounded shadow"
                     style="max-height: 300px;">
             </div>
         @endif

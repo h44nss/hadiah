@@ -56,7 +56,7 @@
                 </div>
                 @if ($draw->image)
                     <div class="mb-3">
-                        <img src="{{ asset('storage/' . $draw->image) }}" alt="Gambar Hadiah" class="img-fluid rounded">
+                        <img src="{{ asset('uploads/' . $draw->image) }}" alt="Gambar Hadiah" class="img-fluid rounded">
                     </div>
                 @endif
 
