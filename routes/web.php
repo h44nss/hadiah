@@ -7,11 +7,25 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\ParticipantController;
 use App\Http\Controllers\Admin\DrawController;
 use App\Http\Controllers\PublicDrawController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Models\Draw;
 
-Route::get('/', function () {
-    return redirect()->route('admin.dashboard');
-});
+// Register
+Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+
+// Login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+
+// Logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Dashboard (hanya untuk user login)
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

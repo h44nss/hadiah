@@ -92,6 +92,14 @@
                                 <i class="fas fa-calendar-alt me-2"></i>Event
                             </a>
                         </li>
+                        <li class="nav-item mt-3">
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger w-100">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </nav>
