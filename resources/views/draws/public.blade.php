@@ -148,18 +148,8 @@
         }
 
         @keyframes spin {
-<<<<<<< HEAD
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-=======
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
         }
 
         /* === COUNTDOWN ANIMATION === */
@@ -255,19 +245,11 @@
             .main-content {
                 padding: 2rem 1rem;
             }
-<<<<<<< HEAD
-
-            .countdown {
-                font-size: 2rem;
-            }
-
-=======
             
             .countdown {
                 font-size: 2rem;
             }
             
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
             .rolling-names {
                 font-size: 1.2rem;
             }
@@ -312,25 +294,9 @@
             margin-right: 8px;
         }
 
-<<<<<<< HEAD
-        .status-waiting {
-            background: #ffc107;
-            animation: pulse 2s infinite;
-        }
-
-        .status-drawing {
-            background: #17a2b8;
-            animation: spin 1s linear infinite;
-        }
-
-        .status-completed {
-            background: #28a745;
-        }
-=======
         .status-waiting { background: #ffc107; animation: pulse 2s infinite; }
         .status-drawing { background: #17a2b8; animation: spin 1s linear infinite; }
         .status-completed { background: #28a745; }
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
     </style>
 </head>
 
@@ -357,16 +323,10 @@
         {{-- Prize Image --}}
         @if ($draw->image)
             <div class="mb-4">
-<<<<<<< HEAD
-                <img src="{{ asset('uploads/' . $draw->image) }}" alt="Gambar Hadiah"
-                    class="img-fluid rounded shadow-lg"
-                    style="max-height: 300px; border: 3px solid rgba(255, 255, 255, 0.3);">
-=======
                 <img src="{{ asset('uploads/' . $draw->image) }}" 
                      alt="Gambar Hadiah" 
                      class="img-fluid rounded shadow-lg"
                      style="max-height: 300px; border: 3px solid rgba(255, 255, 255, 0.3);">
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
             </div>
         @endif
 
@@ -388,11 +348,7 @@
                                             Pemenang #{{ $winner->position }}
                                         </span>
                                     </div>
-<<<<<<< HEAD
-
-=======
                                     
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                                     <div class="mb-3 mt-3">
                                         @if ($winner->position == 1)
                                             <i class="fas fa-crown fa-4x text-warning crown-animation"></i>
@@ -404,11 +360,7 @@
                                             <i class="fas fa-trophy fa-4x text-success"></i>
                                         @endif
                                     </div>
-<<<<<<< HEAD
-
-=======
                                     
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                                     <h3 class="card-title mb-2">{{ $winner->participant->name }}</h3>
                                     @if ($winner->participant->company)
                                         <p class="text-light opacity-75 mb-0">{{ $winner->participant->company }}</p>
@@ -430,19 +382,6 @@
         <div id="drawingInterface" style="display: {{ $draw->winners->count() > 0 ? 'none' : 'block' }};">
             <div class="card drawing-animation mx-auto" style="max-width: 600px;">
                 <div class="card-body py-5">
-<<<<<<< HEAD
-
-                    {{-- Waiting Status --}}
-                    <div id="waitingStatus">
-                        <i class="fas fa-hourglass-half fa-4x mb-4 text-warning"></i>
-                        <h3 class="mb-3">
-                            <span class="status-indicator status-waiting"></span>
-                            Loading
-                        </h3>
-                        <p class="opacity-75">Silakan tunggu, akan segera memulai proses undian...</p>
-                    </div>
-
-=======
                     
                     {{-- Waiting Status --}}
                     <div id="waitingStatus">
@@ -454,7 +393,6 @@
                         <p class="opacity-75">Silakan tunggu, akan segera memulai proses undian...</p>
                     </div>
 
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                     {{-- Drawing Status --}}
                     <div id="drawingStatus" style="display: none;">
                         <i class="fas fa-cog spinning-wheel fa-4x mb-4 text-info"></i>
@@ -501,11 +439,7 @@
     </div>
 
     {{-- Admin Controls (Only visible to admin) --}}
-<<<<<<< HEAD
-    @if (auth()->user() && auth()->user()->role == 'admin')
-=======
     @if(auth()->user() && auth()->user()->role == 'admin')
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
         <div class="admin-controls">
             <button id="startDrawBtn" class="btn btn-draw">
                 <i class="fas fa-play me-2"></i>
@@ -524,22 +458,14 @@
                 this.checkInterval = null;
                 this.refreshInterval = null;
                 this.rollingInterval = null;
-<<<<<<< HEAD
-
-=======
                 
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                 this.init();
             }
 
             init() {
                 this.bindEvents();
                 this.startRealtimeCheck();
-<<<<<<< HEAD
-
-=======
                 
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                 // Auto-refresh participants for rolling animation
                 this.updateRollingNames();
             }
@@ -553,46 +479,27 @@
 
             async startDraw() {
                 if (this.isDrawing) return;
-<<<<<<< HEAD
-
-                this.isDrawing = true;
-                const btn = document.getElementById('startDrawBtn');
-
-=======
                 
                 this.isDrawing = true;
                 const btn = document.getElementById('startDrawBtn');
                 
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                 if (btn) {
                     btn.disabled = true;
                     btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sedang Mengundi...';
                 }
 
                 this.showDrawingInterface();
-<<<<<<< HEAD
-
-=======
                 
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                 try {
                     // Simulate API call to start draw
                     const response = await fetch(`/api/draws/${this.drawId}/start`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-<<<<<<< HEAD
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute(
-                                'content')
-                        }
-                    });
-
-=======
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
                         }
                     });
                     
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                     if (response.ok) {
                         this.startCountdown();
                     } else {
@@ -630,11 +537,7 @@
                 try {
                     const response = await fetch(`/api/events/${this.eventId}/participants`);
                     const participants = await response.json();
-<<<<<<< HEAD
-
-=======
                     
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                     const rollingNames = document.getElementById('rollingNames');
                     if (rollingNames && participants.length > 0) {
                         // Shuffle and take 15 participants
@@ -655,11 +558,7 @@
                     if (countdownElement) {
                         countdownElement.textContent = count;
                     }
-<<<<<<< HEAD
-
-=======
                     
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                     if (count <= 0) {
                         clearInterval(countdownInterval);
                         this.stopRollingAnimation();
@@ -670,19 +569,11 @@
 
             showResult() {
                 this.createConfetti();
-<<<<<<< HEAD
-
-                setTimeout(() => {
-                    document.getElementById('drawingStatus').style.display = 'none';
-                    document.getElementById('resultStatus').style.display = 'block';
-
-=======
                 
                 setTimeout(() => {
                     document.getElementById('drawingStatus').style.display = 'none';
                     document.getElementById('resultStatus').style.display = 'block';
                     
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                     // Stop intervals and reload page after showing result
                     setTimeout(() => {
                         this.stopAllIntervals();
@@ -696,11 +587,7 @@
                 this.checkInterval = setInterval(async () => {
                     await this.checkForUpdates();
                 }, 3000);
-<<<<<<< HEAD
-
-=======
                 
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                 // Also set up periodic page refresh every 15 seconds as backup
                 this.refreshInterval = setInterval(() => {
                     if (!this.isDrawing) {
@@ -713,20 +600,12 @@
                 try {
                     const response = await fetch(`/api/draws/${this.drawId}/status`);
                     const data = await response.json();
-<<<<<<< HEAD
-
-=======
                     
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                     // Check if new winners found
                     if (data.winners && data.winners.length > 0) {
                         // Stop all intervals before reload
                         this.stopAllIntervals();
-<<<<<<< HEAD
-
-=======
                         
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                         // Show confetti first, then reload
                         this.createConfetti();
                         setTimeout(() => {
@@ -734,33 +613,21 @@
                         }, 2000);
                         return;
                     }
-<<<<<<< HEAD
-
-=======
                     
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                     // Update drawing status if admin started drawing from another session
                     if (data.status === 'drawing' && !this.isDrawing) {
                         this.isDrawing = true;
                         this.showDrawingInterface();
                         this.startCountdown();
                     }
-<<<<<<< HEAD
-
-=======
                     
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                     // If drawing is completed but no winners yet, keep checking
                     if (data.status === 'completed' && !this.isDrawing) {
                         setTimeout(() => {
                             window.location.reload();
                         }, 1000);
                     }
-<<<<<<< HEAD
-
-=======
                     
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                 } catch (error) {
                     console.error('Error checking for updates:', error);
                     // On error, refresh page after 5 seconds
@@ -792,15 +659,9 @@
                     confetti.style.left = Math.random() * 100 + 'vw';
                     confetti.style.animationDelay = Math.random() * 3 + 's';
                     confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
-<<<<<<< HEAD
-
-                    document.body.appendChild(confetti);
-
-=======
                     
                     document.body.appendChild(confetti);
                     
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
                     setTimeout(() => {
                         confetti.remove();
                     }, 5000);
@@ -824,17 +685,6 @@
         // Initialize lottery system when page loads
         document.addEventListener('DOMContentLoaded', () => {
             window.lotterySystem = new LotterySystem();
-<<<<<<< HEAD
-
-            // Show confetti if there are already winners
-            @if ($draw->winners->count() > 0)
-                setTimeout(() => {
-                    window.lotterySystem.createConfetti();
-                }, 1000);
-            @endif
-        });
-
-=======
             
             // Show confetti if there are already winners
             @if($draw->winners->count() > 0)
@@ -844,7 +694,6 @@
             @endif
         });
 
->>>>>>> 8bd49138d804e2d87222c9a4c67dcef5722af36d
         // Cleanup on page unload
         window.addEventListener('beforeunload', () => {
             if (window.lotterySystem) {
