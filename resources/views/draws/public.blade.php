@@ -388,9 +388,9 @@
                         <i class="fas fa-hourglass-half fa-4x mb-4 text-warning"></i>
                         <h3 class="mb-3">
                             <span class="status-indicator status-waiting"></span>
-                            Menunggu Admin Memulai Undian
+                            Loading
                         </h3>
-                        <p class="opacity-75">Silakan tunggu, admin akan segera memulai proses undian...</p>
+                        <p class="opacity-75">Silakan tunggu, akan segera memulai proses undian...</p>
                     </div>
 
                     {{-- Drawing Status --}}
@@ -456,6 +456,7 @@
                 this.drawId = {{ $draw->id ?? 'null' }};
                 this.eventId = {{ $event->id ?? 'null' }};
                 this.checkInterval = null;
+                this.refreshInterval = null;
                 this.rollingInterval = null;
                 
                 this.init();
@@ -573,18 +574,26 @@
                     document.getElementById('drawingStatus').style.display = 'none';
                     document.getElementById('resultStatus').style.display = 'block';
                     
-                    // Reload page after showing result
+                    // Stop intervals and reload page after showing result
                     setTimeout(() => {
+                        this.stopAllIntervals();
                         window.location.reload();
                     }, 3000);
                 }, 1000);
             }
 
             startRealtimeCheck() {
-                // Check for updates every 2 seconds
+                // Check for updates every 3 seconds
                 this.checkInterval = setInterval(async () => {
                     await this.checkForUpdates();
-                }, 2000);
+                }, 3000);
+                
+                // Also set up periodic page refresh every 15 seconds as backup
+                this.refreshInterval = setInterval(() => {
+                    if (!this.isDrawing) {
+                        window.location.reload();
+                    }
+                }, 15000);
             }
 
             async checkForUpdates() {
@@ -592,18 +601,54 @@
                     const response = await fetch(`/api/draws/${this.drawId}/status`);
                     const data = await response.json();
                     
+                    // Check if new winners found
                     if (data.winners && data.winners.length > 0) {
-                        // New winners found, reload page
-                        window.location.reload();
+                        // Stop all intervals before reload
+                        this.stopAllIntervals();
+                        
+                        // Show confetti first, then reload
+                        this.createConfetti();
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                        return;
                     }
                     
-                    // Update drawing status if needed
+                    // Update drawing status if admin started drawing from another session
                     if (data.status === 'drawing' && !this.isDrawing) {
+                        this.isDrawing = true;
                         this.showDrawingInterface();
                         this.startCountdown();
                     }
+                    
+                    // If drawing is completed but no winners yet, keep checking
+                    if (data.status === 'completed' && !this.isDrawing) {
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    }
+                    
                 } catch (error) {
                     console.error('Error checking for updates:', error);
+                    // On error, refresh page after 5 seconds
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 5000);
+                }
+            }
+
+            stopAllIntervals() {
+                if (this.checkInterval) {
+                    clearInterval(this.checkInterval);
+                    this.checkInterval = null;
+                }
+                if (this.refreshInterval) {
+                    clearInterval(this.refreshInterval);
+                    this.refreshInterval = null;
+                }
+                if (this.rollingInterval) {
+                    clearInterval(this.rollingInterval);
+                    this.rollingInterval = null;
                 }
             }
 
@@ -633,12 +678,7 @@
             }
 
             destroy() {
-                if (this.checkInterval) {
-                    clearInterval(this.checkInterval);
-                }
-                if (this.rollingInterval) {
-                    clearInterval(this.rollingInterval);
-                }
+                this.stopAllIntervals();
             }
         }
 
