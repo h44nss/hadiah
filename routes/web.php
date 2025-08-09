@@ -24,7 +24,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Dashboard (hanya untuk user login)
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.dashboard');
 })->middleware('auth');
 
 Route::prefix('admin')->name('admin.')->group(function () {
